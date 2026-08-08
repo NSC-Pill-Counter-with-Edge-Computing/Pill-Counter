@@ -1,4 +1,4 @@
-# 💊 เครื่องนับเม็ดยาอัจฉริยะระบบขอบข่ายด้วยการเรียนรู้ของเครื่อง
+#เครื่องนับเม็ดยาอัจฉริยะระบบขอบข่ายด้วยการเรียนรู้ของเครื่อง
 ### (Edge-Based Machine Learning Smart Pill Counter)
 
 [![NSC 28th](https://img.shields.io/badge/NSC-28th_Contest-blue.svg)](https://www.nectec.or.th/)
