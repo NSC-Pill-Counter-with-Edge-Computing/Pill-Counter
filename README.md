@@ -25,9 +25,9 @@
 
 - **On-Device Edge AI Processing:** ประมวลผลสตรีมภาพและนับจำนวนเม็ดยาแบบ Real-time ณ จุดใช้งาน (Low Latency)
 - **Multi-Class Pill Detection:** ตรวจจับและจำแนกรูปทรงเม็ดยามาตรฐานได้ 3 ประเภทหลัก:
-  - 🔵 **ทรงกลม (Round Tablet)**
-  - 🟢 **ทรงรี (Oval Tablet)**
-  - 💊 **แคปซูล (Capsule)**
+  - **ทรงกลม (Round Tablet)**
+  - **ทรงรี (Oval Tablet)**
+  - **แคปซูล (Capsule)**
 - **Overlapping Elimination Mechanism (กลไกแก้ปัญหายาซ้อนทับ):**
   - วิเคราะห์พื้นที่ทับซ้อนด้วยสมการ **Intersection over Union (IoU)**
   - สั่งการ **มอเตอร์สั่นถาดนับยาอัตโนมัติ (Tray Vibration Motor)** เมื่อพบเม็ดยาวางทับซ้อนกัน เพื่อสลายกลุ่มก้อนยา[cite: 2]
