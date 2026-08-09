@@ -52,7 +52,7 @@
 
 <div align="center">
   <img src="assets/pillSketch.jpg" alt="UI Sketch & Workflow Design" width="48%">
-  <img src="assets/pillUI.jpg" alt="Actual Web/LCD User Interface" width="48%">
+  <img src="assets/pillUI.png" alt="Actual Web/LCD User Interface" width="48%">
   <p><i>ภาพซ้าย: ผังการทำงานและการออกแบบเค้าโครง UI ขั้นต้น (UI Sketch & Mini Workflow) <br> ภาพขวา: ส่วนต่อประสานผู้ใช้จริงบนระบบ (Actual User Interface)</i></p>
 </div>
 
