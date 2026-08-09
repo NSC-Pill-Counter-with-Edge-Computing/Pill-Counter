@@ -1,4 +1,4 @@
-#เครื่องนับเม็ดยาอัจฉริยะระบบขอบข่ายด้วยการเรียนรู้ของเครื่อง
+# เครื่องนับเม็ดยาอัจฉริยะระบบขอบข่ายด้วยการเรียนรู้ของเครื่อง
 ### (Edge-Based Machine Learning Smart Pill Counter)
 
 [![NSC 28th](https://img.shields.io/badge/NSC-28th_Contest-blue.svg)](https://www.nectec.or.th/)
@@ -38,11 +38,28 @@
 
 ## 🔄 การพัฒนาและปรับเปลี่ยนสถาปัตยกรรม (Hardware & Model Migration)
 
-ในการพัฒนาระยะแรก ได้มีการออกแบบระบบบนบอร์ด **Sipeed Maix Go (ชิปเซ็ต Kendryte K210)** ร่วมกับ **MicroPython / Tiny-YOLO (YOLOv2)**[cite: 2] อย่างไรก็ตาม จากการทดสอบใช้งานจริงพบข้อจำกัดทางเทคนิค:
+ในการพัฒนาระยะแรก ได้มีการออกแบบระบบบนบอร์ด **Sipeed Maix Go (ชิปเซ็ต Kendryte K210)** ร่วมกับ **MicroPython / Tiny-YOLO (YOLOv2)** อย่างไรก็ตาม จากการทดสอบใช้งานจริงพบข้อจำกัดทางเทคนิค:
 
 - ⚠️ **Hardware Bottleneck:** SRAM บนชิปเซ็ต K210 มีจำกัด (ใช้งานได้จริงประมาณ 6MB) ทำให้แรมไม่เพียงพอสำหรับการประมวลผลโมเดล Object Detection ที่มีความแม่นยำสูงและการจัดการเฟรมภาพหลายคลาส
 - ✅ **Architectural Upgrade:** ทางทีมพัฒนาจึงได้ทำการปรับเปลี่ยนสถาปัตยกรรมฮาร์ดแวร์มาใช้ **Raspberry Pi 5** ร่วมกับ **Webcam** และอัปเกรดโมเดลเป็น **YOLOv8n**
 - 📈 **Performance Gain:** การอัปเกรดเป็น Raspberry Pi 5 + YOLOv8n ช่วยเพิ่มความแม่นยำในการตรวจจับ (Precision/Recall), รองรับการประมวลผล Real-time Frame Rate ที่สูงขึ้น และทำให้ระบบตรวจจับความทับซ้อน (IoU) สั่งงานมอเตอร์สั่นได้อย่างเสถียร
+
+---
+
+## 🖥️ ส่วนต่อประสานผู้ใช้และการผังการทำงาน (User Interface & Workflow Design)
+
+ระบบได้รับออกแบบหน้าจอใช้งาน (UI) และลำดับการทำงาน (Workflow) ให้สอดคล้องกับพฤติกรรมการใช้งานจริงของบุคลากรทางการแพทย์ เพื่อความสะดวกและแม่นยำในการตั้งค่าก่อนนับยา
+
+<div align="center">
+  <img src="assets/pillSketch.jpg" alt="UI Sketch & Workflow Design" width="48%">
+  <img src="assets/pillUI.jpg" alt="Actual Web/LCD User Interface" width="48%">
+  <p><i>ภาพซ้าย: ผังการทำงานและการออกแบบเค้าโครง UI ขั้นต้น (UI Sketch & Mini Workflow) <br> ภาพขวา: ส่วนต่อประสานผู้ใช้จริงบนระบบ (Actual User Interface)</i></p>
+</div>
+
+### รายละเอียดองค์ประกอบ UI และ Workflow:
+1. **Device Status Monitoring:** แสดงสถานะการเชื่อมต่อฮาร์ดแวร์แบบ Real-time ได้แก่ กล้อง (Camera), โมเดล AI (Inference Model), และเซนเซอร์ควบคุมการสั่น (Vibration Control)
+2. **Target Quantity Setting:** ช่องป้อนจำนวนยาเป้าหมายที่ต้องการนับ พร้อมแป้นพิมพ์ตัวเลข (Keypad) อำนวยความสะดวกบนหน้าจอสัมผัส
+3. **Detection & Warning Workflow (Page 2):** เมื่อเข้าสู่กระบวนการนับ หากตรวจพบปัญหายาทับซ้อน (Warning Overlap) ระบบจะสั่งงานระบบสั่น (Vibration) อัตโนมัติ หากนับได้เกินจำนวนเป้าหมาย ระบบจะแสดงสถานะเตือน `status : too much` พร้อมปุ่มควบคุมกลับสู่หน้าแรก (Navigate Page 1)
 
 ---
 
@@ -51,7 +68,7 @@
 ```text
                      ┌─────────────────────────┐
                      │   High-Res Webcam /     │
-                     │     Camera Module       │
+                     │      Camera Module      │
                      └────────────┬────────────┘
                                   │ (Capture Live Frame)
                                   ▼
@@ -72,10 +89,10 @@
                │  └───────┬──────────────┬─────────┘  │
                └──────────┼──────────────┼────────────┘
                           │              │
-         ┌────────────────┘              └────────────────┐
-         ▼                                                ▼
-┌─────────────────────────┐                      ┌─────────────────────────┐
-│ LCD Display / Web UI    │                      │ Hardware Control        │
-│ - Live Feed & Boxes     │                      │ - PWM Vibration Motor   │
-│ - Total Pill Count      │                      │ - Alert Buzzer          │
-└─────────────────────────┘                      └─────────────────────────┘
+          ┌───────────────┘              └────────────────┐
+          ▼                                               ▼
+┌─────────────────────────┐                     ┌─────────────────────────┐
+│ LCD Display / Web UI    │                     │ Hardware Control        │
+│ - Live Feed & Boxes     │                     │ - PWM Vibration Motor   │
+│ - Total Pill Count      │                     │ - Alert Buzzer          │
+└─────────────────────────┘                     └─────────────────────────┘
